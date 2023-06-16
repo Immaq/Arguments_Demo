@@ -65,6 +65,8 @@
       <AssemblyReference>UiPath.Workflow</AssemblyReference>
       <AssemblyReference>System.Collections.NonGeneric</AssemblyReference>
       <AssemblyReference>System.Collections</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.Design</AssemblyReference>
+      <AssemblyReference>UiPath.System.Activities.ViewModels</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
   <Flowchart DisplayName="Flowchart" sap:VirtualizedContainerService.HintSize="633.6,636.8" sap2010:WorkflowViewState.IdRef="Flowchart_1">
@@ -86,32 +88,66 @@
           <av:Size x:Key="ShapeSize">200,83.2</av:Size>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <Sequence sap:VirtualizedContainerService.HintSize="449.6,382.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+      <Sequence sap:VirtualizedContainerService.HintSize="639.2,889.6" sap2010:WorkflowViewState.IdRef="Sequence_1">
         <Sequence.Variables>
-          <Variable x:TypeArguments="s:String[]" Default="[{&quot;John&quot;, &quot;Jane&quot;, &quot;Andrew&quot;, &quot;Ann&quot;, &quot;Albert&quot;, &quot;Rose&quot;}]" Name="firstName" />
+          <Variable x:TypeArguments="s:String[]" Name="firstName">
+            <Variable.Default>
+              <VisualBasicValue x:TypeArguments="s:String[]" ExpressionText="{}{&quot;John&quot;, &quot;Jane&quot;, &quot;Andrew&quot;, &quot;Ann&quot;, &quot;Albert&quot;, &quot;Rose&quot;}" />
+            </Variable.Default>
+          </Variable>
           <Variable x:TypeArguments="x:Int32" Name="count" />
+          <Variable x:TypeArguments="x:String" Name="variable1" />
         </Sequence.Variables>
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="387.2,270.4" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[firstName]">
+        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="576.8,652" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[firstName]">
           <ui:ForEach.Body>
             <ActivityAction x:TypeArguments="x:String">
               <ActivityAction.Argument>
-                <DelegateInArgument x:TypeArguments="x:String" Name="currentItem" />
+                <DelegateInArgument x:TypeArguments="x:String" Name="item" />
               </ActivityAction.Argument>
-              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="300,82.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
+              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="543.2,464" sap2010:WorkflowViewState.IdRef="Sequence_3">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
+                <If Condition="[item.ToString.StartsWith(&quot;A&quot;)]" sap:VirtualizedContainerService.HintSize="500,374.4" sap2010:WorkflowViewState.IdRef="If_1">
+                  <If.Then>
+                    <Sequence sap:VirtualizedContainerService.HintSize="466.4,191.2" sap2010:WorkflowViewState.IdRef="Sequence_4">
+                      <sap:WorkflowViewStateService.ViewState>
+                        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                          <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                        </scg:Dictionary>
+                      </sap:WorkflowViewStateService.ViewState>
+                      <ui:MultipleAssign DisplayName="Multiple Assign" sap:VirtualizedContainerService.HintSize="423.2,101.6" sap2010:WorkflowViewState.IdRef="MultipleAssign_1">
+                        <ui:MultipleAssign.AssignOperations>
+                          <scg:List x:TypeArguments="ui:AssignOperation" Capacity="4">
+                            <ui:AssignOperation sap2010:WorkflowViewState.IdRef="AssignOperation_1">
+                              <ui:AssignOperation.To>
+                                <OutArgument x:TypeArguments="x:Int32">[count]</OutArgument>
+                              </ui:AssignOperation.To>
+                              <ui:AssignOperation.Value>
+                                <InArgument x:TypeArguments="x:Int32">[count+1]</InArgument>
+                              </ui:AssignOperation.Value>
+                            </ui:AssignOperation>
+                          </scg:List>
+                        </ui:MultipleAssign.AssignOperations>
+                      </ui:MultipleAssign>
+                    </Sequence>
+                  </If.Then>
+                  <If.Else>
+                    <Sequence sap2010:WorkflowViewState.IdRef="Sequence_5" />
+                  </If.Else>
+                </If>
               </Sequence>
             </ActivityAction>
           </ui:ForEach.Body>
         </ui:ForEach>
+        <ui:MessageBox Caption="{x:Null}" ChosenButton="{x:Null}" AutoCloseAfter="00:00:00" DisplayName="Message Box" sap:VirtualizedContainerService.HintSize="576.8,85.6" sap2010:WorkflowViewState.IdRef="MessageBox_1" Text="[count.ToString]" />
       </Sequence>
     </FlowStep>
   </Flowchart>
